@@ -12,7 +12,7 @@ import RemoteData exposing (RemoteData)
 
 {--
 query {
-  continent(code: "AF") {
+  continents {
     name
   }
 }
