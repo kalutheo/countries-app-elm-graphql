@@ -34,7 +34,7 @@ type Model
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( Loading
-    , ApiSingleContinent.makeRequest GotSingleContinent
+    , ApiAllContinents.makeRequest GotAllContinents
     )
 
 
@@ -45,6 +45,7 @@ init _ =
 type Msg
     = GotText (Result Http.Error String)
     | GotSingleContinent (Result (Graphql.Http.Error (Maybe Continent)) (Maybe Continent))
+    | GotAllContinents (Result (Graphql.Http.Error (Maybe AllContinents)) (Maybe AllContinents))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -61,14 +62,21 @@ update msg model =
         GotSingleContinent (Ok response) ->
             let
                 _ =
-                    Debug.log "Response OK " response
+                    Debug.log "GotSingleContinent OK " response
             in
             ( model, Cmd.none )
 
         GotSingleContinent (Err err) ->
             let
                 _ =
-                    Debug.log "Response Err" err
+                    Debug.log "GotSingleContinent Err" err
+            in
+            ( model, Cmd.none )
+
+        GotAllContinents response ->
+            let
+                _ =
+                    Debug.log "GotAllContinents" response
             in
             ( model, Cmd.none )
 
